@@ -50,7 +50,7 @@ if __name__ == "__main__":
     TO = datetime.strptime(TO, "%d/%m/%y")
     print("INFO: Reading emails from " + str(FROM) + " to " + str(TO))
     mail_list = read_emails(gm_serv, FROM, TO)
-    print("INFO: fetched " + len(mail_list) + " emails!")
+    print("INFO: fetched " + str(len(mail_list)) + " emails!")
     print("INFO: analysing mails and associating labels...")
     label_list = []
     for mail in mail_list:
