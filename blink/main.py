@@ -54,7 +54,8 @@ if __name__ == "__main__":
     print("INFO: analysing mails and associating labels...")
     label_list = []
     for mail in mail_list:
-        label_list.append(label_email(mail))
+        label_list.append(label_email(mail, participant_email))
+    print(label_list)
     tracked, non_tracked = get_sample_each_type(
         label_list, NUM_SAMPLES_TO_COLLECT)
     identifier, json_to_send = generate_data_for_mothership(

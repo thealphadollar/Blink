@@ -13,7 +13,7 @@ def read_emails(service, fro, to):
     email_list = []
     emails = service.users().messages().list(userId="me",
                                       q = "after:" + fro.strftime("%Y/%m/%d") + " before:" + to.strftime("%Y/%m/%d"),
-                                      maxResults = 10
+                                      maxResults = 100
                                     ).execute()
     for email in emails["messages"]:
         email_dict = {}
