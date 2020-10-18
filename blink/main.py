@@ -2,20 +2,18 @@ import json
 import os
 from datetime import datetime
 
+from collector import get_participant_email, get_sample_each_type, read_emails
 from googleapiclient.discovery import build
 from httplib2 import Http
-from oauth2client import client, file, tools
-
-from collector import (get_participant_email, get_sample_each_type,
-                             read_emails)
 from labeller import label_email
+from oauth2client import client, file, tools
 from sender import generate_data_for_mothership, send_to_mothership
 
 AUTH_CREDS = os.path.join(os.path.expanduser('~'), ".blinkcreds")
 APP_CREDS = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), ".client_secrets")
-OUTPUT_PATH_JSON = os.path.join(
-    os.path.expanduser('~'), "email_tracking_analysis.json")
+OUTPUT_PATH_CSV = os.path.join(
+    os.path.expanduser('~'), "email_tracking_analysis.csv")
 SCOPES = "https://www.googleapis.com/auth/gmail.readonly"
 FROM = "01/10/20"   # in DD/MM/YY, inclusive
 TO = "31/10/20"     # in DD/MM/YY, inclusive
@@ -41,11 +39,13 @@ if __name__ == "__main__":
     gm_serv = auth()
     participant_email = get_participant_email(gm_serv)
     if participant_email is not None:
-        confirmation = input("Your email ID is " + participant_email + ". Is that correct? (Y/n) ")
+        confirmation = input("Your email ID is " +
+                             participant_email + ". Is that correct? (Y/n) ")
         if confirmation != "" and confirmation != "Y":
             participant_email = None
     if participant_email is None:
-        participant_email = input("Please enter your email ID (will not be sent to researches, used only for generating identifier): ")        
+        participant_email = input(
+            "Please enter your email ID (will not be sent to researches, used only for generating identifier): ")
     FROM = datetime.strptime(FROM, "%d/%m/%y")
     TO = datetime.strptime(TO, "%d/%m/%y")
     print("INFO: Reading emails from " + str(FROM) + " to " + str(TO))
@@ -57,17 +57,19 @@ if __name__ == "__main__":
         label_list.append(label_email(mail, participant_email))
     print(label_list)
     tracked, non_tracked = get_sample_each_type(
-        label_list, NUM_SAMPLES_TO_COLLECT)
-    identifier, json_to_send = generate_data_for_mothership(
+        label_list, NUM_SAMPLES_TO_COLLECT, participant_email)
+    print(tracked, non_tracked)
+    identifier, csv_to_send = generate_data_for_mothership(
         participant_email, label_list)
-    with open(OUTPUT_PATH_JSON) as f:
-        json.dump(json_to_send, f, indent=4)
-    consent = input("Do you want to proceed to send data stored in " + OUTPUT_PATH_JSON +
+    print(identifier, csv_to_send)
+    with open(OUTPUT_PATH_CSV, 'w+') as f:
+        f.write(csv_to_send)
+    consent = input("Do you want to proceed to send data stored in " + OUTPUT_PATH_CSV +
                     " for research purpose as stated in consent and recruitment form? (Y/n) ")
     if consent != "" and consent != "Y":
         print("Please let us know the issue with sending data by reaching us at shivam.cs.iit.kgp@gmail.com")
         exit(1)
-    send_to_mothership(json_to_send)
+    send_to_mothership(csv_to_send)
     print("We have received your data, please fill the survey at " +
           SURVEY_LINK + " Use the following information in the survey:")
     print("Identifier: " + identifier)
