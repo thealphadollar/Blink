@@ -48,6 +48,7 @@ if __name__ == "__main__":
             "Please enter your email ID (will not be sent to researches, used only for generating identifier): ")
     FROM = datetime.strptime(FROM, "%d/%m/%y")
     TO = datetime.strptime(TO, "%d/%m/%y")
+    TO = TO.replace(hour=23, minute=59, second=59)
     print("INFO: Reading emails from " + str(FROM) + " to " + str(TO))
     mail_list = read_emails(gm_serv, FROM, TO)
     print("INFO: fetched " + str(len(mail_list)) + " emails!")
@@ -55,13 +56,10 @@ if __name__ == "__main__":
     label_list = []
     for mail in mail_list:
         label_list.append(label_email(mail, participant_email))
-    print(label_list)
     tracked, non_tracked = get_sample_each_type(
         label_list, NUM_SAMPLES_TO_COLLECT, participant_email)
-    print(tracked, non_tracked)
     identifier, csv_to_send = generate_data_for_mothership(
         participant_email, label_list)
-    print(identifier, csv_to_send)
     with open(OUTPUT_PATH_CSV, 'w+') as f:
         f.write(csv_to_send)
     consent = input("Do you want to proceed to send data stored in " + OUTPUT_PATH_CSV +
@@ -74,5 +72,5 @@ if __name__ == "__main__":
           SURVEY_LINK + " Use the following information in the survey:")
     print("Identifier: " + identifier)
     for index, sample in enumerate(zip(tracked, non_tracked)):
-        print("EMAIL_SAMPLE_A" + (index+1) + ": " + sample[0])
-        print("EMAIL_SAMPLE_B" + (index+1) + ": " + sample[1])
+        print("EMAIL_SAMPLE_A" + str(index+1) + ": " + sample[0])
+        print("EMAIL_SAMPLE_B" + str(index+1) + ": " + sample[1])
