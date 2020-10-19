@@ -1,6 +1,6 @@
 # Thank You
 
-We are grateful that you considered contributing to NxDraft. Please follow the below guidelines for contribution.
+We are grateful that you considered contributing to Blink. Please follow the below guidelines for contribution.
 
 Follow the golder rule:
 
@@ -37,4 +37,4 @@ It is highly recommended to follow the below guidelines while writing commits an
 
 ## Communication
 
-Please join the [gitter channel](https://gitter.im/NxDraft/Lobby) for communication regarding the project. No personal communication will be entertained :)
+Please mail the maintainer @thealphadollar (blink[at]thealphadollar[dot]me) for communication regarding the project.
