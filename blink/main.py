@@ -41,7 +41,7 @@ if __name__ == "__main__":
     if participant_email is not None:
         confirmation = input("Your email ID is " +
                              participant_email + ". Is that correct? (Y/n) ")
-        if confirmation != "" and confirmation != "Y":
+        if confirmation != "" and confirmation.lower() != "y":
             participant_email = None
     if participant_email is None:
         participant_email = input(
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         f.write(csv_to_send)
     consent = input("Do you want to proceed to send data stored in " + OUTPUT_PATH_CSV +
                     " for research purpose as stated in consent and recruitment form? (Y/n) ")
-    if consent != "" and consent != "Y":
+    if consent != "" and consent.lower() != "y":
         print("Please let us know the issue with sending data by reaching us at shivam.cs.iit.kgp@gmail.com")
         exit(1)
     send_to_mothership(csv_to_send)

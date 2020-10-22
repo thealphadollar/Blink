@@ -5,9 +5,18 @@ import os
 
 INTERACTION_TYPE = ["SENT", "RECEIVED"]
 TRACKING_TYPE = ["OPEN", "CLICK"]
-TIME_QUADRANT = ["Q1", "Q2", "Q3", "Q4"]
+TIME_QUADRANT = ["1", "2", "3", "4"]
 CONTENT_TYPE = ["CATEGORY_PERSONAL", "CATEGORY_UPDATES",
                 "CATEGORY_PROMOTIONS", "CATEGORY_FORUMS", "CATEGORY_SOCIAL"]
+WEEKDAY_NUM_TO_STRING = {
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+    7: "Sunday"
+}
 TRACKER_LIST_JSON_PATH = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), "trackerList.json")
 TRACKER_LIST = None
@@ -51,13 +60,20 @@ def get_tracking_type(mail):
                         break
             if cur_type_tracker_found:
                 break
-    return tracking_types
+    if len(tracking_types) == 0:
+        return False, False
+    if len(tracking_types) == 2:
+        return True, True
+    if TRACKING_TYPE[0] in tracking_types:
+        return True, False
+    else:
+        return False, True
 
 
 def get_time_details(timestamp):
     timestamp = parse(timestamp)
     quadrant = timestamp.hour//6
-    return quadrant, timestamp.hour, timestamp.minute, timestamp.isoweekday(), timestamp.day, timestamp.month
+    return (quadrant + 1), timestamp.hour, timestamp.minute, WEEKDAY_NUM_TO_STRING.get(timestamp.isoweekday()), timestamp.day, timestamp.month
 
 
 def get_thread_avg_time(threads, thread_len, participant_email):
@@ -90,8 +106,8 @@ def label_email(email, participant_email):
     labels["id"] = email["id"]
     labels["interaction_type"] = get_interaction_type(
         email["to"], participant_email)
-    labels["tracking_type"] = get_tracking_type(email)
-    labels["content_type"] = get_content_type(email)
+    labels["has_open_tracking"], labels["has_click_tracking"] = get_tracking_type(email)
+    labels["content_type"] = get_content_type(email).replace("CATEGORY_", "")
     labels["time_quadrant"], labels["hour"], labels["minute"], labels["weekday"], labels["date"], labels["month"] = get_time_details(
         email["timestamp"])
     labels["thread_length"] = len(email["thread"])

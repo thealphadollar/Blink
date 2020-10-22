@@ -18,22 +18,22 @@
 		{
 			"name": "MC",
 			"domains": ["mandrillapp.com/track","list-manage.com/track","list-manage1.com/track"],
-			"patterns": ["*://*.mandrillapp.com/track/open*","*://*.list-manage.com/track/open*","*://*.list-manage1.com/track/open*"]
+			"patterns": ["://[\\S]*.mandrillapp.com/track/open","://[\\S]*.list-manage.com/track/open","://[\\S]*.list-manage1.com/track/open"]
 		},
 		{
 			"name": "SG",
 			"domains": ["sendgrid.net/wf"],
-			"patterns": ["*://*.sendgrid.net/wf/open*", "\/wf\/open\\?upn="]
+			"patterns": ["://[\\S]*.sendgrid.net/wf/open", "\/wf\/open\\?upn="]
 		},
 		{
 			"name": "IC",
 			"domains": ["icptrack.com/icp"],
-			"patterns": ["*://*.icptrack.com/icp/track*"]
+			"patterns": ["[\\S]*://[\\S]*.icptrack.com/icp/track[\\S]*"]
 		},
 		{
 			"name": "BT",
 			"domains": ["bl-1.com"],
-			"patterns": ["*://*.bl-1.com/*"]
+			"patterns": ["[\\S]*://[\\S]*.bl-1.com/[\\S]*"]
 		},
 		{
 			"name": "MM",
@@ -48,37 +48,37 @@
 		{
 			"name": "CC",
 			"domains": ["constantcontact.com/images", "r20.rs6.net/on.jsp"],
-			"patterns": ["*://*.constantcontact.com/images/p1x1.gif*"]
+			"patterns": ["[\\S]*://[\\S]*.constantcontact.com/images/p1x1.gif[\\S]*"]
 		},
 		{
 			"name": "GA",
 			"domains": ["google-analytics.com/collect"],
-			"patterns": ["*://*.google-analytics.com/collect*"]
+			"patterns": ["[\\S]*://[\\S]*.google-analytics.com/collect[\\S]*"]
 		},
 		{
 			"name": "IB",
 			"domains": ["mkt4477.com/open"],
-			"patterns": ["*://*.mkt4477.com/open*"]
+			"patterns": ["[\\S]*://[\\S]*.mkt4477.com/open[\\S]*"]
 		},
 		{
 			"name": "MP",
 			"domains": ["mixpanel.com/track"],
-			"patterns": ["*://*.mixpanel.com/track*"]
+			"patterns": ["[\\S]*://[\\S]*.mixpanel.com/track[\\S]*"]
 		},
 		{
 			"name": "GN",
 			"domains": ["email81.com"],
-			"patterns": ["*://*.email81.com/*","*://*.email81.com/*"]
+			"patterns": ["[\\S]*://[\\S]*.email81.com/[\\S]*","[\\S]*://[\\S]*.email81.com/[\\S]*"]
 		},
 		{
 			"name": "SV", 
 			"domains": ["strongview.com/t"],
-			"patterns": ["*://*.strongview.com/t/*"]
+			"patterns": ["[\\S]*://[\\S]*.strongview.com/t/[\\S]*"]
 		},
 		{
 			"name": "GM", 
 			"domains": ["ec2-52-26-194-35.us-west-2.compute.amazonaws.com/x"],
-			"patterns": ["*://*.ec2-52-26-194-35.us-west-2.compute.amazonaws.com/x/*"]
+			"patterns": ["[\\S]*://[\\S]*.ec2-52-26-194-35.us-west-2.compute.amazonaws.com/x/[\\S]*"]
         },
         {
             "name": "MC",
@@ -217,23 +217,23 @@
 		{
 			"name": "MC",
 			"domains": ["mandrillapp.com/track","list-manage.com/track","list-manage1.com/track"],
-			"patterns": ["*://*.mandrillapp.com/track/click*","*://*.list-manage.com/track/click*","*://*.list-manage1.com/track/click*"]
+			"patterns": ["[\\S]*://[\\S]*.mandrillapp.com/track/click[\\S]*","[\\S]*://[\\S]*.list-manage.com/track/click[\\S]*","[\\S]*://[\\S]*.list-manage1.com/track/click[\\S]*"]
 		},
 		{
 			"name": "SG",
 			"domains": ["sendgrid.net/wf"],
-			"patterns": ["*://*.sendgrid.net/wf/click*"]
+			"patterns": ["[\\S]*://[\\S]*.sendgrid.net/wf/click[\\S]*"]
 		},
 		{
 			"name": "IC",
 			"domains": ["click.icptrack.com/icp"],
-			"patterns": ["*://*.icptrack.com/icp/relay*"],
+			"patterns": ["[\\S]*://[\\S]*.icptrack.com/icp/relay[\\S]*"],
 			"param": "destination"
 		},
 		{
 			"name": "BT",
 			"domains": ["bl-1.com"],
-			"patterns": ["*://*.bl-1.com/*"],
+			"patterns": ["[\\S]*://[\\S]*.bl-1.com/[\\S]*"],
 			"param": "url"
 		},
 		{
@@ -249,28 +249,28 @@
 		{
 			"name": "IB",
 			"domains": ["mkt4477.com/ctt"],
-			"patterns": ["*://*.mkt4477.com/ctt*"]
+			"patterns": ["[\\S]*://[\\S]*.mkt4477.com/ctt[\\S]*"]
 		},
 		{
 			"name": "SL", 
 			"domains": ["signl.live/tracker"],
-			"patterns": ["*://*.sendgrid.net/wf/click*"],
+			"patterns": ["[\\S]*://[\\S]*.sendgrid.net/wf/click[\\S]*"],
 			"param": "redirect"
 		},
 		{
 			"name": "SV", 
 			"domains": ["strongview.com/t"],
-			"patterns": ["*://*.strongview.com/t/*"]
+			"patterns": ["[\\S]*://[\\S]*.strongview.com/t/[\\S]*"]
 		},
 		{
 			"name": "GM", 
 			"domains": ["ec2-52-26-194-35.us-west-2.compute.amazonaws.com/x"],
-			"patterns": ["*://*.ec2-52-26-194-35.us-west-2.compute.amazonaws.com/x/*"]
+			"patterns": ["[\\S]*://[\\S]*.ec2-52-26-194-35.us-west-2.compute.amazonaws.com/x/[\\S]*"]
 		},
 		{
 			"name": "PM", 
 			"domains": ["pstmrk.it"],
-			"patterns": ["*://click.pstmrk.it/*"]
+			"patterns": ["[\\S]*://click.pstmrk.it/[\\S]*"]
 		}
     ]
 }

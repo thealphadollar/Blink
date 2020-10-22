@@ -74,7 +74,7 @@ def get_sample_each_type(label_list, num_samples, participant_email):
     all_tracking = set([x for x in range(len(label_list))])
     with_tracking = set()
     for ind in range(len(label_list)):
-        if len(label_list[ind]["tracking_type"]):
+        if label_list[ind]["has_open_tracking"] or label_list[ind]["has_click_tracking"]:
             with_tracking.add(ind)
     without_tracking = all_tracking - with_tracking
     tracked = []
