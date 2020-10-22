@@ -2,8 +2,9 @@ from dateutil.parser import parse
 
 INTERACTION_TYPE = ["SENT", "RECEIVED"]
 TRACKING_TYPE = ["READ", "LINK"]
-CONTENT_TYPE = ["PERSONAL", "BUSINESS"]
 TIME_QUADRANT = ["Q1", "Q2", "Q3", "Q4"]
+CONTENT_TYPE = ["CATEGORY_PERSONAL", "CATEGORY_UPDATES",
+                "CATEGORY_PROMOTIONS", "CATEGORY_FORUMS", "CATEGORY_SOCIAL"]
 
 
 def get_interaction_type(mail_to, participant_email):
@@ -11,12 +12,14 @@ def get_interaction_type(mail_to, participant_email):
         return INTERACTION_TYPE[1]
     return INTERACTION_TYPE[0]
 
-# TODO: Improve method to decide content type
-
 
 def get_content_type(mail):
-    if "@gmail.com" in mail["from"] or "@gmail.com" in mail["to"]:
-        return CONTENT_TYPE[1]
+    if INTERACTION_TYPE[0] in mail["labels"]:
+        return CONTENT_TYPE[0]
+    else:
+        for label in mail["labels"]:
+            if label in CONTENT_TYPE:
+                return label
     return CONTENT_TYPE[0]
 
 # TODO: Improve method to decide tracking

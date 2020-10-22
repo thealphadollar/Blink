@@ -19,7 +19,7 @@ def read_emails(service, fro, to):
                                              q="after:" +
                                              fro.strftime(
                                                  "%Y/%m/%d") + " before:" + to.strftime("%Y/%m/%d"),
-                                             maxResults=100
+                                             maxResults=1000
                                              ).execute()
     for email in emails["messages"]:
         email_dict = {}
