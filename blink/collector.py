@@ -36,15 +36,18 @@ def read_emails(service, fro, to):
                 email_dict["from"] = header["value"]
             elif header["name"] == "Subject":
                 email_dict["subject"] = header["value"]
-        if email_info["payload"]["body"].get("data"):
-            email_dict["body"] = str(_get_from_base64(
-                email_info["payload"]["body"]["data"]))
-        elif len(email_info["payload"]["parts"]) > 0:
-            for part in email_info["payload"]["parts"]:
-                if part["mimeType"] == "text/plain" or part["mimeType"] == "text/html":
-                    email_dict["body"] = str(
-                        _get_from_base64(part["body"]["data"]))
-        else:
+        try:
+            if email_info["payload"]["body"].get("data"):
+                email_dict["body"] = str(_get_from_base64(
+                    email_info["payload"]["body"]["data"]))
+            elif len(email_info["payload"]["parts"]) > 0:
+                for part in email_info["payload"]["parts"]:
+                    if part["mimeType"] == "text/plain" or part["mimeType"] == "text/html":
+                        email_dict["body"] = str(
+                            _get_from_base64(part["body"]["data"]))
+            else:
+                email_dict["body"] = None
+        except KeyError as _:
             email_dict["body"] = None
 
         # thread information
