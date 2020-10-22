@@ -21,6 +21,7 @@ def read_emails(service, fro, to):
                                                  "%Y/%m/%d") + " before:" + to.strftime("%Y/%m/%d"),
                                              maxResults=1000
                                              ).execute()
+    progress = 0
     for email in emails["messages"]:
         email_dict = {}
         email_dict["id"] = email["id"]
@@ -65,6 +66,8 @@ def read_emails(service, fro, to):
                     minimal_cur_thread_info["from"] = header["value"]
             email_dict["thread"].append(minimal_cur_thread_info)
         email_list.append(email_dict)
+        progress += 1
+        print(f"INFO: Fetched {progress} out of {len(emails['messages'])} emails", end="\r", flush=True)
     return email_list
 
 
