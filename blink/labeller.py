@@ -1,10 +1,19 @@
 from dateutil.parser import parse
+import json
+import re
+import os
 
 INTERACTION_TYPE = ["SENT", "RECEIVED"]
-TRACKING_TYPE = ["READ", "LINK"]
+TRACKING_TYPE = ["OPEN", "CLICK"]
 TIME_QUADRANT = ["Q1", "Q2", "Q3", "Q4"]
 CONTENT_TYPE = ["CATEGORY_PERSONAL", "CATEGORY_UPDATES",
                 "CATEGORY_PROMOTIONS", "CATEGORY_FORUMS", "CATEGORY_SOCIAL"]
+TRACKER_LIST_JSON_PATH = os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "trackerList.json")
+TRACKER_LIST = None
+
+with open(TRACKER_LIST_JSON_PATH) as f:
+    TRACKER_LIST = json.load(f)
 
 
 def get_interaction_type(mail_to, participant_email):
@@ -22,15 +31,26 @@ def get_content_type(mail):
                 return label
     return CONTENT_TYPE[0]
 
-# TODO: Improve method to decide tracking
-
 
 def get_tracking_type(mail):
     tracking_types = []
-    if "sendgrid" in mail.get("body", "").lower():
-        tracking_types.append(TRACKING_TYPE[1])
-    if "mailtrack" in mail.get("body", "").lower():
-        tracking_types.append(TRACKING_TYPE[0])
+    lowercase_body = mail.get("body", "").lower()
+    for tracking_type in TRACKING_TYPE:
+        cur_type_tracker_found = False
+        for tracker in TRACKER_LIST[tracking_type]:
+            for domain in tracker["domains"]:
+                if domain in lowercase_body:
+                    tracking_types.append(tracking_type)
+                    cur_type_tracker_found = True
+                    break
+            else:
+                for pattern in tracker["patterns"]:
+                    if len(re.findall(pattern, lowercase_body)) > 0:
+                        tracking_types.append(tracking_type)
+                        cur_type_tracker_found = True
+                        break
+            if cur_type_tracker_found:
+                break
     return tracking_types
 
 
