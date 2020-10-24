@@ -49,7 +49,7 @@ if __name__ == "__main__":
     FROM = datetime.strptime(FROM, "%d/%m/%y")
     TO = datetime.strptime(TO, "%d/%m/%y")
     TO = TO.replace(hour=23, minute=59, second=59)
-    print("INFO: Reading emails from " + str(FROM) + " to " + str(TO))
+    print("INFO: Reading emails from " + str(FROM) + " to " + str(TO) + ", please fill the survey at " + SURVEY_LINK + " as this may take a few minutes!")
     mail_list = read_emails(gm_serv, FROM, TO)
     print("INFO: fetched " + str(len(mail_list)) + " emails!")
     print("INFO: analysing mails and associating labels...")
@@ -70,8 +70,7 @@ if __name__ == "__main__":
         print("Please let us know the issue with sending data by reaching us at shivam.cs.iit.kgp@gmail.com")
         exit(1)
     send_to_mothership(csv_to_send)
-    print("We have received your data, please fill the survey at " +
-          SURVEY_LINK + " Use the following information in the survey:")
+    print("We have received your data, use the following information in the survey: ")
     print("Identifier: " + identifier)
     for index, sample in enumerate(zip(tracked, non_tracked)):
         print("EMAIL_SAMPLE_A" + str(index+1) + ": " + sample[0])
