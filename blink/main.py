@@ -18,7 +18,7 @@ SCOPES = "https://www.googleapis.com/auth/gmail.readonly"
 FROM = "01/10/20"   # in DD/MM/YY, inclusive
 TO = "31/10/20"     # in DD/MM/YY, inclusive
 NUM_SAMPLES_TO_COLLECT = 1
-SURVEY_LINK = "https://example.com"
+SURVEY_LINK = "https://shivamcsiitkgp.typeform.com/to/RvRdbgcZ"
 
 
 def auth():
