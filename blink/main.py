@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+import sys
 
 from collector import get_participant_email, get_sample_each_type, read_emails
 from googleapiclient.discovery import build
@@ -10,8 +11,14 @@ from oauth2client import client, file, tools
 from sender import generate_data_for_mothership, send_to_mothership
 
 AUTH_CREDS = os.path.join(os.path.expanduser('~'), ".blinkcreds")
-APP_CREDS = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), ".client_secrets")
+
+# make work with frozen data from pyinstaller
+if getattr(sys, 'frozen', False):
+    APP_CREDS = os.path.join(sys._MEIPASS, ".client_secrets")
+else:
+    APP_CREDS = os.path.join(os.path.dirname(
+        os.path.realpath(__file__)), ".client_secrets")
+
 OUTPUT_PATH_CSV = os.path.join(
     os.path.expanduser('~'), "email_tracking_analysis.csv")
 SCOPES = "https://www.googleapis.com/auth/gmail.readonly"
@@ -49,7 +56,8 @@ if __name__ == "__main__":
     FROM = datetime.strptime(FROM, "%d/%m/%y")
     TO = datetime.strptime(TO, "%d/%m/%y")
     TO = TO.replace(hour=23, minute=59, second=59)
-    print("INFO: Reading emails from " + str(FROM) + " to " + str(TO) + ", please fill the survey at " + SURVEY_LINK + " as this may take a few minutes!")
+    print("INFO: Reading emails from " + str(FROM) + " to " + str(TO) +
+          ", please fill the survey at " + SURVEY_LINK + " as this may take a few minutes!")
     mail_list = read_emails(gm_serv, FROM, TO)
     print("INFO: fetched " + str(len(mail_list)) + " emails!")
     print("INFO: analysing mails and associating labels...")

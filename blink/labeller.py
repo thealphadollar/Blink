@@ -2,6 +2,7 @@ from dateutil.parser import parse
 import json
 import re
 import os
+import sys
 
 INTERACTION_TYPE = ["SENT", "RECEIVED"]
 TRACKING_TYPE = ["OPEN", "CLICK"]
@@ -17,8 +18,13 @@ WEEKDAY_NUM_TO_STRING = {
     6: "Saturday",
     7: "Sunday"
 }
-TRACKER_LIST_JSON_PATH = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), "trackerList.json")
+
+# make work with frozen data from pyinstaller
+if getattr(sys, 'frozen', False):
+    TRACKER_LIST_JSON_PATH = os.path.join(sys._MEIPASS, "trackerList.json")
+else:
+    TRACKER_LIST_JSON_PATH = os.path.join(os.path.dirname(
+        os.path.realpath(__file__)), "trackerList.json")
 TRACKER_LIST = None
 
 with open(TRACKER_LIST_JSON_PATH) as f:
@@ -106,7 +112,8 @@ def label_email(email, participant_email):
     labels["id"] = email["id"]
     labels["interaction_type"] = get_interaction_type(
         email["to"], participant_email)
-    labels["has_open_tracking"], labels["has_click_tracking"] = get_tracking_type(email)
+    labels["has_open_tracking"], labels["has_click_tracking"] = get_tracking_type(
+        email)
     labels["content_type"] = get_content_type(email).replace("CATEGORY_", "")
     labels["time_quadrant"], labels["hour"], labels["minute"], labels["weekday"], labels["date"], labels["month"] = get_time_details(
         email["timestamp"])
