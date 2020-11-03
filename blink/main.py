@@ -65,7 +65,10 @@ if __name__ == "__main__":
     for mail in mail_list:
         if mail.get("body") is None:
             continue
-        label_list.append(label_email(mail, participant_email))
+        try:
+            label_list.append(label_email(mail, participant_email))
+        except:
+            continue
     tracked, non_tracked = get_sample_each_type(
         label_list, NUM_SAMPLES_TO_COLLECT, participant_email)
     identifier, csv_to_send = generate_data_for_mothership(

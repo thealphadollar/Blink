@@ -111,7 +111,7 @@ def label_email(email, participant_email):
     labels = {}
     labels["id"] = email["id"]
     labels["interaction_type"] = get_interaction_type(
-        email["to"], participant_email)
+        email.get("to", "##"), participant_email)
     labels["has_open_tracking"], labels["has_click_tracking"] = get_tracking_type(
         email)
     labels["content_type"] = get_content_type(email).replace("CATEGORY_", "")
