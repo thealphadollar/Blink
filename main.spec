@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['blink/main.py'],
-             pathex=['blink', '/home/thealphadollar/.local/share/virtualenvs/Blink-_KHfAu0d/', '/mnt/2e270c8c-e632-49f7-a404-dedaa1ec4528/OpenSource/Blink'],
+             pathex=['blink', '/home/thealphadollar/.local/share/virtualenvs/Blink-_KHfAu0d/', '/media/sf_Blink'],
              binaries=[],
              datas=[('blink/.client_secrets', '.'), ('blink/trackerList.json', '.')],
              hiddenimports=['google-api-python-client'],
